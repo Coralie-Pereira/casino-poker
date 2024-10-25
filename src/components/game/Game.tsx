@@ -114,7 +114,7 @@ const Game = () => {
           />
         ))}
       </div>
-      <button onClick={nextTurn} className="bg-blue-500 text-white p-2 rounded">
+      <button onClick={nextTurn} className="marche">
         Jouer le tour {turn}
       </button>
       {winner && (
@@ -125,7 +125,7 @@ const Game = () => {
           setTurn(0);
           setWinner(null);
         }}
-        className="bg-blue-500 text-white p-2 rounded"
+        className="marche"
       >
         Rejouer
       </button>
