@@ -18,6 +18,8 @@ const Game = () => {
   const [winner, setWinner] = useState<string | null>(null);
   const [revealIndex, setRevealIndex] = useState<number>(0);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
+  const [computerCardsVisible, setComputerCardsVisible] =
+    useState<boolean>(false);
 
   useEffect(() => {
     drawHand();
@@ -27,6 +29,7 @@ const Game = () => {
     const shuffledDeck = [...deck].sort(() => 0.5 - Math.random());
     setPlayerHand(shuffledDeck.slice(0, 4));
     setComputerHand(shuffledDeck.slice(4, 8));
+    setComputerCardsVisible(false);
   };
 
   const replaceCards = () => {
@@ -56,6 +59,7 @@ const Game = () => {
     } else {
       const playerResult = evaluateHand(playerHand);
       const computerResult = evaluateHand(computerHand);
+      console.log(computerResult, playerResult);
       const winnerName = playerResult > computerResult ? "Player" : "Computer";
       setWinner(winnerName);
       setIsGameOver(true);
@@ -65,6 +69,8 @@ const Game = () => {
       } else {
         revealWinningCards(computerHand.length);
       }
+
+      setComputerCardsVisible(true);
     }
   };
 
@@ -86,7 +92,7 @@ const Game = () => {
             key={index}
             value={card.value}
             suit={card.suit}
-            faceUp={isGameOver && index < computerHand.length}
+            faceUp={isGameOver && computerCardsVisible}
             onClick={() => {}}
           />
         ))}
@@ -111,6 +117,7 @@ const Game = () => {
             suit={card.suit}
             faceUp={true}
             onClick={() => handleBlock(index)}
+            className="cursor"
           />
         ))}
       </div>
@@ -124,6 +131,8 @@ const Game = () => {
         onClick={() => {
           setTurn(0);
           setWinner(null);
+          setComputerCardsVisible(false);
+          drawHand();
         }}
         className="marche"
       >

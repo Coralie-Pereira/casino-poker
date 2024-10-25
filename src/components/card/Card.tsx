@@ -1,7 +1,7 @@
 // ----------- Représente une carte ---------
 
 import React from "react";
-import { CardType } from "../../type/types";
+import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 
 interface CardProps {
@@ -9,12 +9,19 @@ interface CardProps {
   suit: string;
   faceUp: boolean;
   onClick: () => void;
+  className?: string;
 }
 
-const Card: React.FC<CardProps> = ({ value, suit, faceUp, onClick }) => {
+const Card: React.FC<CardProps> = ({
+  value,
+  suit,
+  faceUp,
+  onClick,
+  className,
+}) => {
   return (
     <motion.div
-      className={`card ${faceUp ? "" : "flipped"}`}
+      className={cn(`card ${faceUp ? "" : "flipped"}`, className)}
       onClick={onClick}
       animate={{ rotateY: faceUp ? 0 : 180 }}
       transition={{ duration: 0.5 }}
